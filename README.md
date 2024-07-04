@@ -3,13 +3,19 @@ This project explores how self-supervised learning can be
 used to augment the performance of the segmentation model
 This is accomplished by first pre-training the model on 
 the image reconstruction task on a large unannotated 
-dataset similar in size to the smaller annotated dataset.
+dataset similar to the smaller annotated dataset.
 
 We use UNet, an encoder-decoder model to perform 
 segmentation.
 
+The pretraining set is a large set of medical cell slides that are not annotated in any way. This data is generally easier to come by.
+The fine-tuning set is a smaller set of medical cell slides that are annotated by experts to segment cancerous cells differently from non-cancerous cells.
+
+The baseline model uses the the small dataset by itself.
+The finetuned model is first pretrained on image reconstruction on a large number of slides, then finetuned on the annotated datset.
+
 ## Requirements -
-PyTorch  - GPU
+PyTorch - GPU
 Numpy
 Matplotlib
 argparse
@@ -44,7 +50,7 @@ the `train_data` can have unannotated files.
 python pretrain.py
 ```
 
-It should be s simple as that assuming that your data 
+It should be as simple as that assuming that your data 
 is organized as recommended.  
 If not, you can pass optional parameters -
 ```
@@ -63,7 +69,7 @@ If not, you can pass optional parameters -
 ### Fine-tuning
 
 ```bash
-python train_segmentation.py --pretrin_weight_path "snapshots_folder/pretrain-19.pt"
+python train_segmentation.py --pretrain_weight_path "snapshots_folder/pretrain-19.pt"
 ```
 Additionally, you can pass the following arguments
 ```
